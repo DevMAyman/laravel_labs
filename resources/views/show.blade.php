@@ -4,8 +4,8 @@
 <div class="card w-75 m-5" style="width: 18rem;">
 <div class="card-body p-0">
     <p class="card-title border-bottom bg-info p-2">Post Info</p>
-    <h5 class="card-title p-2">Title: {{$post['Title']}}</h5>
-    <h5 class="card-title p-2">Posted by:   {{$post['desc']}}</h5>
+    <h5 class="card-title p-2">Title: {{$post['title']}}</h5>
+    <h5 class="card-title p-2">Description:   {{$post['desc']}}</h5>
   </div>
 
 </div>
