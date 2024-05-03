@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Post;
+use App\Models\User;
+
 
 class PostController extends Controller
 {
@@ -18,7 +20,8 @@ class PostController extends Controller
 
      function index () {  
         $myposts= Post::all();
-    return view('home', ["posts"=>$myposts]);
+        $users=User::all();
+    return view('home', ["posts"=>$myposts,"users"=>$users]);
 }
 
 function show ($id){
@@ -29,19 +32,16 @@ function create (){
         return view('create');
 }
 
-private function file_operations(Request $request)
-{
-        $image = $request->file('image');
-        $filename = time() . '.' . $image->getClientOriginalName();
-        print_r($filename);
-        $filepath = $image->storeAs('images', $filename);
-        
-        return $filepath;
-    
-}
+private function file_operations($request)
+    {
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $filepath = $image->store("images", "posts_uploads");
+            return $filepath;
+        }
+        return null;
+    }
 
-
-// /home/dev_ayman/laravel/post/config/cache.php
     function store(Request $request)
     {
         $filepath = $this->file_operations($request);

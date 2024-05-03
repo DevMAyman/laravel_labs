@@ -43,10 +43,9 @@ return [
             'visibility' => 'public',
             'throw' => false,
         ],
-
-        'post' => [
+        'posts_uploads' => [
             'driver' => 'local',
-            'root' => storage_path('images'),
+            'root' => public_path('images/posts'),
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
             'throw' => false,

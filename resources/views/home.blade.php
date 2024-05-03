@@ -15,11 +15,11 @@
             </tr>
           </thead>
           <tbody>
-            @foreach ($posts as $post)
+            @foreach ($posts as $post )
             <tr class="d-flex">
               <th scope="row" class="d-flex justify-content-center col-md-1">{{ $post['id'] }}</th>
               <td class="d-flex justify-content-center col-md-2">{{ $post['title'] }}</td>
-              <td class="d-flex justify-content-center col-md-2">{{ $post['PostedBy'] }}</td>
+              <td class="d-flex justify-content-center col-md-2"></td>
               <td class="d-flex justify-content-center col-md-2">{{ $post['created_at'] }}</td>
               <td class="d-flex justify-content-center col-md-4 gap-2">
                 <a class="btn btn-success" href="{{route('post.show',$post['id'])}}">View</a>
