@@ -1,4 +1,4 @@
-@extends('layout.layout')
+@extends('home')
 @section('content')
 <div class="d-flex justify-content-center">
     <form class="mt-5 w-75" method="post" action="{{ route('post.update', $post->id) }}">

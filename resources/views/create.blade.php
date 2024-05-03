@@ -1,5 +1,5 @@
 
-@extends('layout.layout')
+@extends('home')
 @section('content')
 <div class="d-flex justify-content-center ">
 <form class="mt-5 w-75" method="post" action="{{ route('post.store') }}" enctype="multipart/form-data">
@@ -11,14 +11,6 @@
    <div class="form-group mb-5">
     <label for="image" class="mb-3">Title</label>
     <input type="file" name="image" class="form-control" id="title" aria-describedby="emailHelp" placeholder="image" >
-  </div>
-  <div class="form-group mb-5">
-    <label for="user" class="mb-3">User</label>
-    <select class="form-select" name="user" id="user">
-        @foreach ($users as $user )
-          <option value="{{$user['id']}}">{{$user['name']}}</option>
-        @endforeach
-    </select>
   </div>
   <div class="form-floating">
   <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"name="desc"></textarea>

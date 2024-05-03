@@ -16,5 +16,9 @@ Route::delete('/posts/{id}',[PostController::class,'delete'])->name('post.delete
 Route::get('/',function(){
     return view('welcome');
 });
+Route::get('profile', [PostController::class, 'showprofile'])->name('posts.showprofile');
 
 
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

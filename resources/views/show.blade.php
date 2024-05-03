@@ -1,4 +1,4 @@
-@extends("layout.layout")
+@extends('home')
 
 @section("content")
 <img style="width:30%" src="{{ asset('images/posts/'.$post->image) }}" class="img-fluid" alt="..."><div class="card-body p-0">

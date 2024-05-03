@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Post;
 use App\Models\User;
-
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -18,10 +18,15 @@ class PostController extends Controller
         ['id'=>4, 'Title'=>'post title4', 'PostedBy'=> 'Omar' , 'CreatedAt'=>'02-08-2024', 'desc'=>'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quae maiores, corrupti, voluptates molestias eveniet esse repudiandae reprehenderit et tenetur fuga illum quos pariatur modi, eos tempora dignissimos totam dolore?','email'=>'mo@gmail.com']
     ];
 
+
+public function __construct(){
+    $this->middleware('auth');
+}
+
  function index()
 {  
     $posts = Post::with('user')->paginate(18); 
-    return view('home', compact('posts'));
+    return view('index', compact('posts'));
     // $myposts = Post::with('user')->get();
     // return view('home', ["posts" => $myposts]);
 }
@@ -52,7 +57,7 @@ private function file_operations($request)
         $post = new Post();
         $post->title = $request->input('title');
         $post->desc = $request->input('desc');
-        $post->user_id=$request->input('user');
+        $post->user_id=Auth::id();
         $post->image = $filepath; 
         $post->save();
 
@@ -61,10 +66,24 @@ private function file_operations($request)
 
 function edit ($id){
         $mypost= Post::findOrFail($id);
-        $user= Post::findOrFail($mypost["user_id"]);
+        if(Auth::id()==$mypost->user_id){
+                    $user= Post::findOrFail($mypost["user_id"]);
         $users= User::all();
     return view('edit',["post"=>$mypost,"users"=>$users, "user"=>$user]);
+
+        }
+        else{
+            return abort(401);
+        }
 }
+
+public function showprofile()
+    {
+        $userId = Auth::id();
+        $user = User::find($userId);
+        $posts = Post::where('user_id', $userId)->paginate(10);
+        return view('profile',['user' => $user,'posts'=>$posts]);
+    }
 
 public function update(Request $request, $id)
     {
@@ -83,9 +102,15 @@ public function update(Request $request, $id)
 
 function delete ($id){
     $mypost = Post::findOrFail($id);
-    $mypost->delete();
+            if(Auth::id()==$mypost->user_id){
+                    $mypost->delete();
     
     return redirect()->back()->with('success', 'Post deleted successfully.');
+
+            }
+            else{
+                return abort(401);
+            }
 }
 
 
