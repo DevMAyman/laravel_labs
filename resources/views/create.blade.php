@@ -12,6 +12,14 @@
     <label for="image" class="mb-3">Title</label>
     <input type="file" name="image" class="form-control" id="title" aria-describedby="emailHelp" placeholder="image" >
   </div>
+  <div class="form-group mb-5">
+    <label for="user" class="mb-3">User</label>
+    <select class="form-select" name="user" id="user">
+        @foreach ($users as $user )
+          <option value="{{$user['id']}}">{{$user['name']}}</option>
+        @endforeach
+    </select>
+  </div>
   <div class="form-floating">
   <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"name="desc"></textarea>
   <label for="floatingTextarea2">Description</label>
@@ -19,6 +27,4 @@
   <button type="submit" class="btn btn-primary mt-5">Submit</button>
 </form>
 </div>
-
-
 @endsection('content')

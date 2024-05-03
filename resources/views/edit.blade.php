@@ -14,6 +14,14 @@
             <textarea class="form-control" name="desc" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px">{{ $post->desc }}</textarea>
             <label for="floatingTextarea2">Description</label>
         </div>
+        <div class="form-group mb-5">
+    <label for="user" class="mb-3">User</label>
+    <select class="form-select" name="user" id="user" value="{{$user['name']}}">
+        @foreach ($users as $user )
+          <option value="{{$user['id']}}">{{$user['name']}}</option>
+        @endforeach
+    </select>
+  </div>
         <button type="submit" class="btn btn-primary mt-5">Submit</button>
     </form>
 </div>

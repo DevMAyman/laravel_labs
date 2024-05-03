@@ -18,18 +18,22 @@ class PostController extends Controller
         ['id'=>4, 'Title'=>'post title4', 'PostedBy'=> 'Omar' , 'CreatedAt'=>'02-08-2024', 'desc'=>'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloribus quae maiores, corrupti, voluptates molestias eveniet esse repudiandae reprehenderit et tenetur fuga illum quos pariatur modi, eos tempora dignissimos totam dolore?','email'=>'mo@gmail.com']
     ];
 
-     function index () {  
-        $myposts= Post::all();
-        $users=User::all();
-    return view('home', ["posts"=>$myposts,"users"=>$users]);
+ function index()
+{  
+    $posts = Post::with('user')->paginate(18); 
+    return view('home', compact('posts'));
+    // $myposts = Post::with('user')->get();
+    // return view('home', ["posts" => $myposts]);
 }
 
 function show ($id){
     $mypost= Post::findOrFail($id);
-    return view('show',["post"=>$mypost]);    
+    $user = User::findOrFail($mypost['user_id']);
+    return view('show',["post"=>$mypost,"user"=>$user]);    
 }
 function create (){
-        return view('create');
+        $users= User::all();
+        return view('create',["users"=>$users]);
 }
 
 private function file_operations($request)
@@ -48,6 +52,7 @@ private function file_operations($request)
         $post = new Post();
         $post->title = $request->input('title');
         $post->desc = $request->input('desc');
+        $post->user_id=$request->input('user');
         $post->image = $filepath; 
         $post->save();
 
@@ -56,7 +61,9 @@ private function file_operations($request)
 
 function edit ($id){
         $mypost= Post::findOrFail($id);
-    return view('edit',["post"=>$mypost]);
+        $user= Post::findOrFail($mypost["user_id"]);
+        $users= User::all();
+    return view('edit',["post"=>$mypost,"users"=>$users, "user"=>$user]);
 }
 
 public function update(Request $request, $id)
@@ -65,6 +72,7 @@ public function update(Request $request, $id)
 
         $post->title = $request['title'];
         $post->desc = $request['desc'];
+        $post->user_id=$request['user'];
 
         $post->save();
 
